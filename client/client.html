@@ -6,7 +6,61 @@
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
+    const handleResponse = (xhr) => {
+        const type = xhr.getResponseHeader('content-type');
+        
+        const content = document.querySelector("#content");
+		
+		const h1 = document.createElement('h1');
+		const p = document.createElement('p');
+        
+        if(type === 'application/json') {
+			const obj = JSON.parse(xhr.response)
+			if (xhr.status === 200){
+				h1.textContent = `success`;
+			} else {
+				h1.textContent = `${obj.id}`;
+			}
+			p.textContent = `${obj.message}`;
+		} else if (type === 'text/xml') {
+			if (xhr.status === 200){
+				h1.textContent = `success`;
+			} else {
+				const id = xhr.responseXML.querySelector('id').textContent;
+				h1.textContent = `${id}`;
+			}
+			
+			const message = xhr.responseXML.querySelector('message').textContent;
+			p.textContent = `${message}`;
+		}
+		
+		content.innerHTML = "";
+		content.appendChild(h1);
+		content.appendChild(p);
+	};
+    
+    const sendAjax = (url, type) => {
+        const xhr = new XMLHttpRequest();
+        
+        xhr.open('GET', url);
+        xhr.setRequestHeader("Accept", type);
+        xhr.onload = () => handleResponse(xhr);
+        xhr.send();
+    };
 
+    const init = () => {
+		const sendButton = document.querySelector("#send");
+		
+		const pageBox = document.querySelector('#page');
+		const typeBox = document.querySelector('#type');
+		const contentBox = document.querySelector('#content');
+		
+		const sendHandler = () => sendAjax(page.value, type.value);
+		
+		sendButton.addEventListener('click', sendHandler);
+	};
+	
+	window.onload = init;
   </script>
 </head>
 <body>

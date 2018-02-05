@@ -1,0 +1,26 @@
+{
+  "name": "http-api-assignment-1",
+  "version": "1.0.0",
+  "description": "api assignment",
+  "main": "src/server.js",
+  "scripts": {
+	"start": "node ./src/server.js",
+	"pretest": "eslint ./src --fix",
+    "test": "echo \"tests complete\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChasParr/http-api-assignment-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChasParr/http-api-assignment-1/issues"
+  },
+  "homepage": "https://github.com/ChasParr/http-api-assignment-1#readme",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0"
+  }
+}
